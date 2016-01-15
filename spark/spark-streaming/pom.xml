@@ -16,8 +16,10 @@
 
 	<properties>
 		<version.jdk>1.8</version.jdk>
+		<version.scala>2.10.4</version.scala>
 		<version.maven.compiler>3.3</version.maven.compiler>
 		<version.maven.exec>1.4.0</version.maven.exec>
+		<version.maven.scala>3.2.0</version.maven.scala>
 		<version.infinispan>8.0.0.Final</version.infinispan>
 		<version.spark.core>1.4.0</version.spark.core>
 		<version.spark.ispn>0.3-SNAPSHOT</version.spark.ispn>
@@ -47,6 +49,11 @@
 				<artifactId>infinispan-spark_2.10</artifactId>
 				<version>${version.spark.ispn}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.scala-lang</groupId>
+				<artifactId>scala-library</artifactId>
+				<version>${version.scala}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -62,6 +69,11 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>exec-maven-plugin</artifactId>
 					<version>${version.maven.exec}</version>
+				</plugin>
+				<plugin>
+					<groupId>net.alchim31.maven</groupId>
+					<artifactId>scala-maven-plugin</artifactId>
+					<version>${version.maven.scala}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
