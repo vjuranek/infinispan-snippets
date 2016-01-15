@@ -15,7 +15,7 @@ import org.infinispan.spark.stream.InfinispanJavaDStream;
 
 import scala.Tuple3;
 
-public class TemperatureAnalysis {
+public class TemperatureAnalysisJava {
     public static final String ISPN_ADDRESS = "127.0.0.1:11222";
     public static final String CACHE_NAME = "default";
 
