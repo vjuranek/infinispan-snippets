@@ -18,13 +18,10 @@ public class HotRodClientJava {
         RemoteCacheManager cacheManager = new RemoteCacheManager(builder.build());
         RemoteCache<String, String> cache = cacheManager.getCache();
 
+        //cacheSize.andThen(dumpCache).apply(cache);
         onCache(cache, cacheSize.andThen(dumpCache));
         
         cacheManager.stop();
-    }
-
-    private static void onCache(RemoteCache<?, ?> cache, Function<RemoteCache<?, ?>, RemoteCache<?, ?>> cacheFunction) {
-        cacheFunction.apply(cache);
     }
 
     private static Function<RemoteCache<?, ?>, RemoteCache<?, ?>> dumpCache = cache -> {
@@ -40,5 +37,9 @@ public class HotRodClientJava {
         System.out.printf("Cahce size: %d%n", cache.size());
         return cache;
     };
+    
+    private static void onCache(RemoteCache<?, ?> cache, Function<RemoteCache<?, ?>, RemoteCache<?, ?>> cacheFunction) {
+        cacheFunction.apply(cache);
+    }
 
 }
