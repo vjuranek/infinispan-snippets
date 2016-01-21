@@ -37,6 +37,11 @@
 				<version>${version.spark.ispn}</version>
 			</dependency>
 			<dependency>
+				<groupId>org.infinispan</groupId>
+				<artifactId>infinispan-remote</artifactId>
+				<version>${version.infinispan}</version>
+			</dependency>
+			<dependency>
 				<groupId>org.scala-lang</groupId>
 				<artifactId>scala-library</artifactId>
 				<version>${version.scala}</version>

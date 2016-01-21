@@ -8,24 +8,30 @@ import org.apache.spark.rdd.RDD
 import org.infinispan.spark.rdd.InfinispanRDD
 
 object TextSearch {
-  def main(args: Array[String]) {
-    val sparkConf = new SparkConf().setAppName("TextSearch")
-    val sc = new SparkContext(sparkConf)
+    
+    val filePath = "/tmp/test.log" 
+    val searchedText = "ERROR"
+    
+    def main(args: Array[String]) {
+        val sparkConf = new SparkConf().setAppName("TextSearch")
+        val sc = new SparkContext(sparkConf)
 
-    val rdd = getRDDFromFile(sc, "/tmp/test.log")
-    val errors = rdd.filter(line => line.contains("ERROR"))
-    println("Number of lines containing 'ERROR': " + errors.count())
-  }
+        val errors = searchFromFile(sc)
+        //val errors = searchFromIspn(sc)
+        printf("Number of lines containing '%s': %d \n", searchedText, errors.count())
+    }
 
-  def getRDDFromFile(sc: SparkContext, path: String): RDD[String] = {
-    sc.textFile(path)
-  }
+    def searchFromFile(sc: SparkContext): RDD[String] = {
+        val rdd = sc.textFile(filePath)
+        rdd.filter(line => line.contains(searchedText))
+    }
 
-  def getRDDFromIspn(sc: SparkContext): RDD[(String, String)] = {
-    val config = new Properties
-    config.put("infinispan.rdd.cacheName", "default")
-    config.put("infinispan.client.hotrod.server_list", "127.0.0.1:11222")
-    new InfinispanRDD[String, String](sc, configuration = config)
-  }
+    def searchFromIspn(sc: SparkContext): RDD[(String, String)] = {
+        val config = new Properties
+        config.put("infinispan.rdd.cacheName", "default")
+        config.put("infinispan.client.hotrod.server_list", "127.0.0.1:11222")
+        val rdd = new InfinispanRDD[String, String](sc, configuration = config)
+        rdd.filter(keyVal => keyVal._2.contains(searchedText))
+    }
 
 }
