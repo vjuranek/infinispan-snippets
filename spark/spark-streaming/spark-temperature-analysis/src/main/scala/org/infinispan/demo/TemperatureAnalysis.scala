@@ -9,6 +9,7 @@ import org.apache.spark.streaming.State
 import org.apache.spark.streaming.StateSpec
 import org.apache.spark.streaming.StreamingContext
 import org.apache.spark.streaming.dstream.DStream.toPairDStreamFunctions
+import org.infinispan.spark.stream.InfinispanDStream
 import org.infinispan.spark.stream.InfinispanInputDStream
 
 object TemperatureAnalysis {
@@ -19,10 +20,10 @@ object TemperatureAnalysis {
     val ssc = new StreamingContext(sparkConf, Seconds(1))
     ssc.checkpoint("/tmp/spark-temperature")
 
-    val config = new Properties
-    config.put("infinispan.rdd.cacheName", "default")
-    config.put("infinispan.client.hotrod.server_list", "127.0.0.1:11222")
-    val ispnStream = new InfinispanInputDStream[String, Double](ssc, StorageLevel.MEMORY_ONLY, config)
+    val configIn = new Properties
+    configIn.put("infinispan.rdd.cacheName", "default")
+    configIn.put("infinispan.client.hotrod.server_list", "127.0.0.1:11222")
+    val ispnStream = new InfinispanInputDStream[String, Double](ssc, StorageLevel.MEMORY_ONLY, configIn)
 
     val mapFunc = (key: String, temps: Option[Iterable[Double]], state: State[Map[String, (Double, Long)]]) => {
       val sumMap: Map[String, (Double, Long)] = state.getOption().getOrElse(Map())
@@ -36,12 +37,17 @@ object TemperatureAnalysis {
     
     val measurementStream = ispnStream.map[Tuple2[String, Double]](rdd => (rdd._1, rdd._2))
     val measurementGrouped = measurementStream.groupByKey()
-    val currentAvg = measurementGrouped.mapWithState(StateSpec.function(mapFunc))
+    val avgTemperatures = measurementGrouped.mapWithState(StateSpec.function(mapFunc))
     
-    currentAvg.foreachRDD(rdd => {
+    avgTemperatures.foreachRDD(rdd => {
       printf("# items in DStream: %d\n", rdd.count())
       rdd.foreach(item => println("Averages:" + item._1 + " -> " + item._2))
     })
+    
+    val configOut = new Properties
+    configOut.put("infinispan.rdd.cacheName", "avg-temperatures")
+    configOut.put("infinispan.client.hotrod.server_list", "127.0.0.1:11222")
+    InfinispanDStream[String, Double](avgTemperatures).writeToInfinispan(configOut)
     
     ssc.start()
     ssc.awaitTermination()
