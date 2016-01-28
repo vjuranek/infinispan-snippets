@@ -10,7 +10,7 @@
 
 	<modules>
 		<module>spark-temperature-analysis</module>
-		<!-- module>temperature-histogram</module -->
+		<module>temperature-client</module>
 		<module>temperature-sensor</module>
 	</modules>
 
@@ -31,6 +31,11 @@
 				<groupId>org.infinispan</groupId>
 				<artifactId>infinispan-client-hotrod</artifactId>
 				<version>${version.infinispan}</version>
+			</dependency>
+			<dependency>
+			  <groupId>org.infinispan</groupId>
+			  <artifactId>infinispan-remote</artifactId>
+			  <version>${version.infinispan}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.spark</groupId>
