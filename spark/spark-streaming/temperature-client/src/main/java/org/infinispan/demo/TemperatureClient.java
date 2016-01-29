@@ -33,7 +33,7 @@ public class TemperatureClient {
         RemoteCacheManager cacheManager = new RemoteCacheManager(builder.build());
         RemoteCache<String, Double> cache = cacheManager.getCache(CACHE_NAME);
 
-        AvgTemperatureListner avgTempListener = new AvgTemperatureListner(cache, placesToWatch);
+        AvgTemperatureListener avgTempListener = new AvgTemperatureListener(cache, placesToWatch);
         cache.addClientListener(avgTempListener);
         System.out.println("Client will be listening to avg. temperature updates for 5 minutes");
         Thread.sleep(5 * 60 * 1000);
@@ -45,11 +45,11 @@ public class TemperatureClient {
     }
 
     @ClientListener
-    public static class AvgTemperatureListner {
+    public static class AvgTemperatureListener {
         private final RemoteCache<String, Double> cache;
         private final Set<String> watchedPlaces;
 
-        public AvgTemperatureListner(RemoteCache<String, Double> cache, Set<String> watchedPlaces) {
+        public AvgTemperatureListener(RemoteCache<String, Double> cache, Set<String> watchedPlaces) {
             this.cache = cache;
             this.watchedPlaces = watchedPlaces;
         }
