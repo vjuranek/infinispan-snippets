@@ -36,22 +36,22 @@ public class TemperatureSensor {
 
     private static class TemperatureGenerator extends TimerTask {
 
-        private static final int UPPER_TEMP = 40;
+        private static final int TEMP_MAX = 40;
         private static final String[] places = {"Amsterdam", "Athens", "Belgrade", "Berlin", "Bern", "Bratislava", "Brussels",
                 "Bucharest", "Budapest", "Chişinău", "Copenhagen", "Dublin", "Helsinki", "Kiev", "Lisbon", "Ljubljana",
                 "London", "Luxembourg", "Madrid", "Minsk", "Monaco", "Moscow", "Oslo", "Paris", "Podgorica", "Prague",
                 "Pristina", "Reykjavík", "Riga", "Rome", "San Marino", "Sarajevo", "Skopje", "Sofia", "Stockholm", "Tallinn",
                 "Tirana", "Vaduz", "Valletta", "Vatican City", "Vienna", "Vilnius", "Warsaw", "Zagreb"};
-        private final RemoteCache cache;
+        private final RemoteCache<String, Double> cache;
 
-        public TemperatureGenerator(RemoteCache cache) {
+        public TemperatureGenerator(RemoteCache<String, Double> cache) {
             this.cache = cache;
         }
 
         @Override
         public void run() {
             String place = places[RANDOM.nextInt(places.length)];
-            double temp = RANDOM.nextDouble() * UPPER_TEMP;
+            double temp = RANDOM.nextDouble() * TEMP_MAX;
             cache.put(place, temp);
             System.out.printf("Inserted %s -> %4.2f%n", place, temp);
         }
