@@ -16,8 +16,8 @@ object TextSearch {
         val sparkConf = new SparkConf().setAppName("TextSearch")
         val sc = new SparkContext(sparkConf)
 
-        val errors = searchFromFile(sc)
-        //val errors = searchFromIspn(sc)
+        //val errors = searchFromFile(sc)
+        val errors = searchFromIspn(sc)
         printf("Number of lines containing '%s': %d \n", searchedText, errors.count())
     }
 
