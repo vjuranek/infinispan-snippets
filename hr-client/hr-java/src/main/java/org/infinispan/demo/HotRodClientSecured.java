@@ -29,11 +29,6 @@ public class HotRodClientSecured {
     private static final String PASS_KEY = "password";
     private static final String PARAM_PREFIX = "--";
     private static final String PARAM_SEP = "=";
-    
-    private static final String KEYSTORE_PATH = "./keystore_client.jks";
-    private static final String KEYSTORE_PASSWORD = "secret";
-    private static final String TRUSTSTORE_PATH = "./truststore_client.jks";
-    private static final String TRUSTSTORE_PASSWORD = "secret";
 
     public static void main(String[] args) {
         Map<String, String> userArgs = null;
@@ -48,13 +43,8 @@ public class HotRodClientSecured {
 
         ConfigurationBuilder builder = new ConfigurationBuilder();
         builder.addServer().host(ISPN_IP).port(ConfigurationProperties.DEFAULT_HOTROD_PORT);
-        //setup auth
-        builder.security().authentication().serverName(SERVER_NAME).saslMechanism(SASL_MECH).enable().callbackHandler(
-                new SimpleLoginHandler(userArgs.get(LOGIN_KEY), userArgs.get(PASS_KEY), SECURITY_REALM));
-        //setup encrypt
-        builder.security().ssl().enable().keyStoreFileName(KEYSTORE_PATH)
-                .keyStorePassword(KEYSTORE_PASSWORD.toCharArray()).trustStoreFileName(TRUSTSTORE_PATH)
-                .trustStorePassword(TRUSTSTORE_PASSWORD.toCharArray());
+        builder.security().authentication().serverName(SERVER_NAME).saslMechanism(SASL_MECH).enable()
+                .callbackHandler(new SimpleLoginHandler(userArgs.get(LOGIN_KEY), userArgs.get(PASS_KEY), SECURITY_REALM));
 
         RemoteCacheManager cacheManager = new RemoteCacheManager(builder.build());
         RemoteCache<String, String> cache = cacheManager.getCache(userArgs.containsKey(CACHE_NAME_KEY)
@@ -87,13 +77,13 @@ public class HotRodClientSecured {
     }
 
     private static Map<String, String> getCredentials(String[] args) {
-        if (args.length < 2)
+        if (args.length < 2) 
             throw new IllegalArgumentException("At least login and password required!");
-
+        
         Map<String, String> userArgs = new HashMap<>();
-        for (String arg : args) {
+        for(String arg : args) {
             String[] argArray = extractParam(arg);
-            switch (argArray[0]) {
+            switch(argArray[0]) {
             case PARAM_PREFIX + CACHE_NAME_KEY:
                 userArgs.put(CACHE_NAME_KEY, argArray[1]);
                 break;
@@ -103,18 +93,17 @@ public class HotRodClientSecured {
             case PARAM_PREFIX + PASS_KEY:
                 userArgs.put(PASS_KEY, argArray[1]);
                 break;
-            default:
-                throw new IllegalArgumentException("Unknown argument " + argArray[0]);
+            default: throw new IllegalArgumentException("Unknown argument " + argArray[0]);
             }
         }
         return userArgs;
     }
-
+    
     private static String[] extractParam(String paramStr) {
         String[] param = paramStr.split(PARAM_SEP, 2);
         if (param.length != 2)
             throw new IllegalArgumentException("Specify arguments as --key=value");
-        return new String[] { param[0], param[1] };
+        return new String[] {param[0], param[1]};
     }
 
     public static class SimpleLoginHandler implements CallbackHandler {
