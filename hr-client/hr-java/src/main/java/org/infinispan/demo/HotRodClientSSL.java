@@ -1,16 +1,7 @@
 package org.infinispan.demo;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-
-import javax.security.auth.callback.Callback;
-import javax.security.auth.callback.CallbackHandler;
-import javax.security.auth.callback.NameCallback;
-import javax.security.auth.callback.PasswordCallback;
-import javax.security.auth.callback.UnsupportedCallbackException;
-import javax.security.sasl.RealmCallback;
+import static org.infinispan.demo.util.CacheOps.dumpCache;
+import static org.infinispan.demo.util.CacheOps.onCache;
 
 import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.client.hotrod.RemoteCacheManager;
@@ -23,13 +14,6 @@ public class HotRodClientSSL {
     public static final String SERVER_NAME = "node0";
     public static final String SASL_MECH = "EXTERNAL";
 
-    private static final String SECURITY_REALM = "ApplicationRealm";
-    private static final String CACHE_NAME_KEY = "cache";
-    private static final String LOGIN_KEY = "user";
-    private static final String PASS_KEY = "password";
-    private static final String PARAM_PREFIX = "--";
-    private static final String PARAM_SEP = "=";
-    
     private static final String KEYSTORE_PATH = "./keystore_client.jks";
     private static final String KEYSTORE_PASSWORD = "secret";
     private static final String TRUSTSTORE_PATH = "./truststore_client.jks";
@@ -68,54 +52,4 @@ public class HotRodClientSSL {
         cacheManager.stop();
         System.exit(0);
     }
-
-    private static Function<RemoteCache<?, ?>, RemoteCache<?, ?>> dumpCache = cache -> {
-        Map<?, ?> entries = cache.getBulk();
-        System.out.printf("Number of obtained entries: %d%n", entries.size());
-        for (Object key : entries.keySet()) {
-            System.out.printf("[%s -> %s]%n", key, entries.get(key));
-        }
-        return cache;
-    };
-
-    private static Function<RemoteCache<?, ?>, RemoteCache<?, ?>> cacheSize = cache -> {
-        System.out.printf("Cahce size: %d%n", cache.size());
-        return cache;
-    };
-
-    private static void onCache(RemoteCache<?, ?> cache, Function<RemoteCache<?, ?>, RemoteCache<?, ?>> cacheFunction) {
-        cacheFunction.apply(cache);
-    }
-
-    /*private static Map<String, String> getCredentials(String[] args) {
-        if (args.length < 2)
-            throw new IllegalArgumentException("At least login and password required!");
-
-        Map<String, String> userArgs = new HashMap<>();
-        for (String arg : args) {
-            String[] argArray = extractParam(arg);
-            switch (argArray[0]) {
-            case PARAM_PREFIX + CACHE_NAME_KEY:
-                userArgs.put(CACHE_NAME_KEY, argArray[1]);
-                break;
-            case PARAM_PREFIX + LOGIN_KEY:
-                userArgs.put(LOGIN_KEY, argArray[1]);
-                break;
-            case PARAM_PREFIX + PASS_KEY:
-                userArgs.put(PASS_KEY, argArray[1]);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown argument " + argArray[0]);
-            }
-        }
-        return userArgs;
-    }
-
-    private static String[] extractParam(String paramStr) {
-        String[] param = paramStr.split(PARAM_SEP, 2);
-        if (param.length != 2)
-            throw new IllegalArgumentException("Specify arguments as --key=value");
-        return new String[] { param[0], param[1] };
-    }*/
-
 }
