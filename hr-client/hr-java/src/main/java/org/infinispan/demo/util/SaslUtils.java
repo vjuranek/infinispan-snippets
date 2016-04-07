@@ -43,5 +43,12 @@ public class SaslUtils {
             }
         }
     }
+    
+    public static class VoidCallbackHandler implements CallbackHandler {
+        @Override
+        public void handle(Callback[] callbacks) {
+            // NO-OP
+        }
+    }
 
 }
