@@ -2,6 +2,7 @@ package org.infinispan.demo;
 
 import static org.infinispan.demo.util.CacheOps.dumpCache;
 import static org.infinispan.demo.util.CacheOps.onCache;
+import static org.infinispan.demo.util.CacheOps.putTestKV;
 import static org.infinispan.demo.util.CmdArgs.CACHE_NAME_KEY;
 import static org.infinispan.demo.util.CmdArgs.LOGIN_KEY;
 import static org.infinispan.demo.util.CmdArgs.PASS_KEY;
@@ -40,10 +41,10 @@ public class HotRodClientSecured {
                 new SimpleLoginHandler(userArgs.get(LOGIN_KEY), userArgs.get(PASS_KEY), SECURITY_REALM));
 
         RemoteCacheManager cacheManager = new RemoteCacheManager(builder.build());
-        RemoteCache<String, String> cache = cacheManager.getCache(userArgs.containsKey(CACHE_NAME_KEY)
+        RemoteCache<Object, Object> cache = cacheManager.getCache(userArgs.containsKey(CACHE_NAME_KEY)
                 ? userArgs.get(CACHE_NAME_KEY) : RemoteCacheManager.DEFAULT_CACHE_NAME);
 
-        onCache(cache, dumpCache);
+        onCache(cache, putTestKV.andThen(dumpCache));
 
         cacheManager.stop();
         System.exit(0);

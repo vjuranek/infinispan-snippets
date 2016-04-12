@@ -2,6 +2,7 @@ package org.infinispan.demo;
 
 import static org.infinispan.demo.util.CacheOps.dumpCache;
 import static org.infinispan.demo.util.CacheOps.onCache;
+import static org.infinispan.demo.util.CacheOps.putTestKV;
 
 import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.client.hotrod.RemoteCacheManager;
@@ -9,6 +10,14 @@ import org.infinispan.client.hotrod.configuration.ConfigurationBuilder;
 import org.infinispan.client.hotrod.impl.ConfigurationProperties;
 import org.infinispan.demo.util.SaslUtils;
 
+/**
+ * Example HR client app, which use SSL only for encryption communication between client and server, and also for HR
+ * client authentication, using SASL EXTERANL mechanism. See conf/sasl_exteranl_auth.xml how to configure ISPN server
+ * for this use case.
+ * 
+ * @author vjuranek
+ *
+ */
 public class HotRodClientSSL {
 
     public static final String ISPN_IP = "127.0.0.1";
@@ -32,9 +41,9 @@ public class HotRodClientSSL {
                 .trustStorePassword(TRUSTSTORE_PASSWORD.toCharArray());
 
         RemoteCacheManager cacheManager = new RemoteCacheManager(builder.build());
-        RemoteCache<String, String> cache = cacheManager.getCache(RemoteCacheManager.DEFAULT_CACHE_NAME);
+        RemoteCache<Object, Object> cache = cacheManager.getCache(RemoteCacheManager.DEFAULT_CACHE_NAME);
 
-        onCache(cache, dumpCache);
+        onCache(cache, putTestKV.andThen(dumpCache));
 
         cacheManager.stop();
         System.exit(0);

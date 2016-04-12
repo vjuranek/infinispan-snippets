@@ -18,7 +18,7 @@ public class HotRodClientJava {
         builder.addServer().host(ISPN_IP).port(ConfigurationProperties.DEFAULT_HOTROD_PORT);
         RemoteCacheManager cacheManager = new RemoteCacheManager(builder.build());
         String cacheName = args.length > 0 ? args[0] : "";
-        RemoteCache<String, String> cache = cacheManager.getCache(cacheName);
+        RemoteCache<Object, Object> cache = cacheManager.getCache(cacheName);
 
         //cacheSize.andThen(dumpCache).apply(cache);
         onCache(cache, cacheSize.andThen(dumpCache));
