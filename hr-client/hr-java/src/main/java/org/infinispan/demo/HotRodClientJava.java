@@ -3,6 +3,7 @@ package org.infinispan.demo;
 import static org.infinispan.demo.util.CacheOps.cacheSize;
 import static org.infinispan.demo.util.CacheOps.dumpCache;
 import static org.infinispan.demo.util.CacheOps.onCache;
+import static org.infinispan.demo.util.CacheOps.putTestKV;
 
 import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.client.hotrod.RemoteCacheManager;
@@ -21,7 +22,7 @@ public class HotRodClientJava {
         RemoteCache<Object, Object> cache = cacheManager.getCache(cacheName);
 
         //cacheSize.andThen(dumpCache).apply(cache);
-        onCache(cache, cacheSize.andThen(dumpCache));
+        onCache(cache, putTestKV.andThen(cacheSize.andThen(dumpCache)));
         
         cacheManager.stop();
     }
