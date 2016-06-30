@@ -9,7 +9,7 @@
 		<version.jdk>1.8</version.jdk>
 		<version.maven.compiler>3.3</version.maven.compiler>
 		<version.infinispan>8.2.0.Final</version.infinispan>
-		<java.main.class>org.infinispan.demo.HotRodClientJava</java.main.class>
+		<java.main.class>org.infinispan.demo.HotRodPlainAuthOverSSL</java.main.class>
 	</properties>
 
 	<dependencies>
