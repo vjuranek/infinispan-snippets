@@ -9,7 +9,9 @@
 		<version.jdk>1.8</version.jdk>
 		<version.maven.compiler>3.3</version.maven.compiler>
 		<version.infinispan>8.2.0.Final</version.infinispan>
-		<java.main.class>org.infinispan.demo.HotRodPlainAuthOverSSL</java.main.class>
+		<version.jcache.api>1.0.0</version.jcache.api>
+		<version.log4j2>2.6.2</version.log4j2>
+		<java.main.class>org.infinispan.demo.JCacheExternalAuth</java.main.class>
 	</properties>
 
 	<dependencies>
@@ -17,6 +19,21 @@
 			<groupId>org.infinispan</groupId>
 			<artifactId>infinispan-remote</artifactId>
 			<version>${version.infinispan}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.infinispan</groupId>
+			<artifactId>infinispan-remote</artifactId>
+			<version>${version.infinispan}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.cache</groupId>
+			<artifactId>cache-api</artifactId>
+			<version>${version.jcache.api}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${version.log4j2}</version>
 		</dependency>
 	</dependencies>
 
