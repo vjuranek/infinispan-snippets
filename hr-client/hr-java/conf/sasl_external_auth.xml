@@ -33,7 +33,7 @@
                 </authentication>
 		<server-identities>
 		  <ssl>
-                    <keystore path="keystore_server.jks" relative-to="jboss.server.config.dir" keystore-password="secret"/>
+                    <keystore path="keystore_server.jks" relative-to="jboss.server.config.dir" keystore-password="secret" key-password="changeme" />
                   </ssl>
                 </server-identities>
             </security-realm>
@@ -134,13 +134,13 @@
 	    <security>
 	      <authorization>
 		<common-name-role-mapper />
-		<role name="HotRod" permissions="ALL"/>
+		<role name="hr-client" permissions="ALL"/>
 	      </authorization>
 	    </security>
             <global-state/>
             <local-cache name="default" start="EAGER">
 	      <security>
-		<authorization roles="HotRod admin reader writer supervisor"/>
+		<authorization roles="hr-client admin reader writer supervisor"/>
 	      </security>
               <locking acquire-timeout="30000" concurrency-level="1000" striping="false"/>
               <transaction mode="NONE"/>
