@@ -33,7 +33,7 @@ public class JCacheExternalAuth {
         
         Cache<String, String> cache = cm.getCache(CACHE_NAME);
         cache.put("key", "value");
-        System.out.println("Ker read from cache: " + cache.get("key"));
+        System.out.println("Key read from cache: " + cache.get("key"));
         
         cm.close();
         System.exit(0);
