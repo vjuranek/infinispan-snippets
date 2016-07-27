@@ -22,8 +22,6 @@ import org.infinispan.commons.util.SslContextFactory;
 public class HotRodClientSSLEncrypt {
 
     public static final String ISPN_IP = "127.0.0.1";
-    public static final String SERVER_NAME = "node0";
-    public static final String SASL_MECH = "EXTERNAL";
 
     private static final String TRUSTSTORE_PATH = "./truststore_client.jks";
     private static final String TRUSTSTORE_PASSWORD = "secret";
