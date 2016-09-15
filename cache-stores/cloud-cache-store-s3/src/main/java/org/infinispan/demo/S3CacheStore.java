@@ -9,12 +9,13 @@ public class S3CacheStore {
 
     public static void main(String[] args) throws Exception { 
         ConfigurationBuilder cfg = new ConfigurationBuilder();
-        cfg.persistence().addStore(CloudStoreConfigurationBuilder.class).provider("aws-s3")
-                .endpoint("http://s3.amazonaws.com")
-                .identity("Access Key ID")
-                .credential("Secret Access Key")
-                .container("ispn-store")
-                .location("eu-central-1");
+        cfg.persistence().addStore(CloudStoreConfigurationBuilder.class)
+            .provider("aws-s3")
+            .endpoint("http://s3.amazonaws.com")
+            .identity("Access Key ID")
+            .credential("Secret Access Key")
+            .container("ispn-store")
+            .location("eu-central-1");
 
         DefaultCacheManager cacheManager = new DefaultCacheManager(cfg.build());
         Cache<String, String> cache = cacheManager.getCache("test");
