@@ -10,7 +10,8 @@ public class S3CacheStore {
     public static void main(String[] args) throws Exception { 
         ConfigurationBuilder cfg = new ConfigurationBuilder();
         cfg.persistence().addStore(CloudStoreConfigurationBuilder.class)
-            .provider("aws-s3")
+            .provider("s3")
+            //.provider("aws-s3") //alternatively, this provider can be used - with dependency on org.apache.jclouds.provider.aws-s3 in pom.xml
             .endpoint("http://s3.amazonaws.com")
             .identity("Access Key ID")
             .credential("Secret Access Key")
