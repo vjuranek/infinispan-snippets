@@ -10,7 +10,7 @@
             	user-name="admin" 
             	key="AQCY2sdXyDIcJxAAK1edRJ8xOJ2NkkiXzAuq5A==" 
             	monitor-host="192.168.122.145:6789" 
-            	pool-name="ispn-store"/>
+            	pool-name-prefix="test"/>
          </persistence>
       </local-cache>
    </cache-container>

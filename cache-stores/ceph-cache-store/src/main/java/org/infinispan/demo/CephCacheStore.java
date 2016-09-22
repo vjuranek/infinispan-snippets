@@ -1,7 +1,9 @@
 package org.infinispan.demo;
 
 import org.infinispan.Cache;
+import org.infinispan.configuration.cache.ConfigurationBuilder;
 import org.infinispan.manager.DefaultCacheManager;
+import org.infinispan.persistence.ceph.configuration.CephStoreConfigurationBuilder;
 
 public class CephCacheStore {
 
@@ -11,8 +13,7 @@ public class CephCacheStore {
             .userName("admin")
             .key("AQCY2sdXyDIcJxAAK1edRJ8xOJ2NkkiXzAuq5A==")
             .monitorHost("192.168.122.145:6789")
-            .poolName("ispn-store");
-
+            .poolNamePrefix("ispn_store");
         DefaultCacheManager cacheManager = new DefaultCacheManager(cfg.build());*/
         
         DefaultCacheManager cacheManager = new DefaultCacheManager("ispn-ceph.xml");
