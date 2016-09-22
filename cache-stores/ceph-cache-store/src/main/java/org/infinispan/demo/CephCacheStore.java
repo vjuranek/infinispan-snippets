@@ -1,9 +1,7 @@
 package org.infinispan.demo;
 
 import org.infinispan.Cache;
-import org.infinispan.configuration.cache.ConfigurationBuilder;
 import org.infinispan.manager.DefaultCacheManager;
-import org.infinispan.persistence.ceph.configuration.CephStoreConfigurationBuilder;
 
 public class CephCacheStore {
 
