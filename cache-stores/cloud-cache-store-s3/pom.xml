@@ -11,7 +11,7 @@
 		<version.jdk>1.8</version.jdk>
 		<version.maven.compiler>3.3</version.maven.compiler>
 		<version.infinispan>9.0.0.alpha3</version.infinispan>
-		<version.cachestore.cloud>8.0.1.Final</version.cachestore.cloud>
+		<version.cachestore.cloud>8.0.2-SNAPSHOT</version.cachestore.cloud>
 		<version.jclouds>1.9.2</version.jclouds>
 		<java.main.class>org.infinispan.demo.S3CacheStore</java.main.class>
 	</properties>
@@ -28,15 +28,10 @@
 			<version>${version.cachestore.cloud}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.jclouds.api</groupId>
-			<artifactId>s3</artifactId>
-			<version>${version.jclouds}</version>
-		</dependency>
-		<!-- <dependency>
 			<groupId>org.apache.jclouds.provider</groupId>
 			<artifactId>aws-s3</artifactId>
 			<version>${version.jclouds}</version>
-		</dependency> -->
+		</dependency>
 	</dependencies>
 
 	<build>

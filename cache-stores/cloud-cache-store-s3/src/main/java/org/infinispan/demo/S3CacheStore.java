@@ -11,15 +11,17 @@ public class S3CacheStore {
         ConfigurationBuilder cfg = new ConfigurationBuilder();
         cfg.persistence().addStore(CloudStoreConfigurationBuilder.class)
             .provider("s3")
-            //.provider("aws-s3") //alternatively, this provider can be used - with dependency on org.apache.jclouds.provider.aws-s3 in pom.xml
+            //.provider("aws-s3") //alternatively, this provider can be used
             .endpoint("http://s3.amazonaws.com")
             .identity("Access Key ID")
             .credential("Secret Access Key")
             .container("ispn-store")
-            .location("eu-central-1");
+            .location("us-standard");
+            //.location("eu-central-1")
+            //.normalizeCacheNames(true);
 
         DefaultCacheManager cacheManager = new DefaultCacheManager(cfg.build());
-        Cache<String, String> cache = cacheManager.getCache("test");
+        Cache<String, String> cache = cacheManager.getCache();
         cache.put("key", "value");
         System.out.printf("key = %s\n", cache.get("key"));
         
