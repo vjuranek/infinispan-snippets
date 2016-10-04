@@ -11,4 +11,4 @@
 ```java -jar target/spark-text-search-1.0-SNAPSHOT-jar-with-dependencies.jar```
  * run Spark job:
 
-```$SPARK_HOME/bin/spark-submit --master spark://127.0.0.1:7077 --class org.infinispan.demo.TextSearch --packages org.infinispan:infinispan-spark_2.10:0.3 $WORKSPACE/infinispan-snippets/spark/spark-rdd/spark-text-search/target/spark-text-search-1.0-SNAPSHOT.jar```
+```$SPARK_HOME/bin/spark-submit --master spark://127.0.0.1:7077 --class org.infinispan.demo.TextSearch --packages org.infinispan:infinispan-spark_2.11:0.4 $WORKSPACE/infinispan-snippets/spark/spark-rdd/spark-text-search/target/spark-text-search-1.0-SNAPSHOT.jar```

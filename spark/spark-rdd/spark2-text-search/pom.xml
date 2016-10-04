@@ -10,19 +10,19 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>spark-text-search</artifactId>
+	<artifactId>spark2-text-search</artifactId>
 	
 	<properties>
 		<java.main.class>org.infinispan.demo.IspnFileUpload</java.main.class>
-		<version.scala>2.10.4</version.scala>
-		<version.spark.core>1.6.2</version.spark.core>
-		<version.spark.ispn>0.3</version.spark.ispn>
+		<version.scala>2.11.8</version.scala>
+		<version.spark.core>2.0.0</version.spark.core>
+		<version.spark.ispn>0.4</version.spark.ispn>
 	</properties>
 
 	<dependencies>
 		<dependency>
 				<groupId>org.apache.spark</groupId>
-				<artifactId>spark-core_2.10</artifactId>
+				<artifactId>spark-core_2.11</artifactId>
 				<version>${version.spark.core}</version>
 				<scope>provided</scope>
 			</dependency>
@@ -33,7 +33,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.infinispan</groupId>
-				<artifactId>infinispan-spark_2.10</artifactId>
+				<artifactId>infinispan-spark_2.11</artifactId>
 				<version>${version.spark.ispn}</version>
 			</dependency>
 			<dependency>
@@ -57,7 +57,7 @@
 						</goals>
 						<configuration>
 							<args>
-								<arg>-make:transitive</arg>
+								<!-- <arg>-make:transitive</arg> -->
 								<arg>-dependencyfile</arg>
 								<arg>${project.build.directory}/.scala_dependencies</arg>
 							</args>
