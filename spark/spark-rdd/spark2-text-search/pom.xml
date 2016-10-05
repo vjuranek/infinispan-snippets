@@ -11,35 +11,41 @@
 	</parent>
 
 	<artifactId>spark2-text-search</artifactId>
-	
+
 	<properties>
 		<java.main.class>org.infinispan.demo.IspnFileUpload</java.main.class>
 		<version.scala>2.11.8</version.scala>
 		<version.spark.core>2.0.0</version.spark.core>
+		<version.spark.sql>2.0.0-preview</version.spark.sql>
 		<version.spark.ispn>0.4</version.spark.ispn>
 	</properties>
 
 	<dependencies>
 		<dependency>
-				<groupId>org.apache.spark</groupId>
-				<artifactId>spark-core_2.11</artifactId>
-				<version>${version.spark.core}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.scala-lang</groupId>
-				<artifactId>scala-library</artifactId>
-				<version>${version.scala}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.infinispan</groupId>
-				<artifactId>infinispan-spark_2.11</artifactId>
-				<version>${version.spark.ispn}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.infinispan</groupId>
-				<artifactId>infinispan-remote</artifactId>
-			</dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-core_2.11</artifactId>
+			<version>${version.spark.core}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-sql_2.11</artifactId>
+			<version>${version.spark.sql}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>${version.scala}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.infinispan</groupId>
+			<artifactId>infinispan-spark_2.11</artifactId>
+			<version>${version.spark.ispn}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.infinispan</groupId>
+			<artifactId>infinispan-remote</artifactId>
+		</dependency>
 	</dependencies>
 
 
