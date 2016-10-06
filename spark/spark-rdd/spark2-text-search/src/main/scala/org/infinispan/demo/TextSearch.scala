@@ -26,8 +26,8 @@ object TextSearch {
         val sc = new SparkContext(sparkConf)
 
         //val errors = searchFromFile(sc)
-        val errors = searchFromIspn(sc)
-        //val errors = searchFromIspnAsDF(sc)
+        //val errors = searchFromIspn(sc)
+        val errors = searchFromIspnAsDF(sc)
         printf("Number of lines containing '%s': %d \n", searchedText, errors.count())
     }
 
@@ -51,6 +51,7 @@ object TextSearch {
         val rdd = new InfinispanRDD[String, String](sc, configuration = config)
         
         val spark = SparkSession.builder().appName("TextSearch").getOrCreate()
+        spark.conf.set("spark.sql.codegen.wholeStage", true)
         val keyField = new StructField("key", StringType, nullable = false)
         val valueField = new StructField("value", StringType, nullable = true)
         val schema = StructType(Seq(keyField, valueField))
