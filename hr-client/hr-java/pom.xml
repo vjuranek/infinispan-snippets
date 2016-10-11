@@ -21,11 +21,6 @@
 			<version>${version.infinispan}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.infinispan</groupId>
-			<artifactId>infinispan-remote</artifactId>
-			<version>${version.infinispan}</version>
-		</dependency>
-		<dependency>
 			<groupId>javax.cache</groupId>
 			<artifactId>cache-api</artifactId>
 			<version>${version.jcache.api}</version>
