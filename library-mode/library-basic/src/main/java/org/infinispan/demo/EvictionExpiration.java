@@ -28,8 +28,8 @@ public class EvictionExpiration {
     }
 
     public static void expirationExample() throws Exception {
-        final long expiration = 5000l;
-        Configuration conf = new ConfigurationBuilder().expiration().maxIdle(expiration).enableReaper().build();
+        final long expiration = 5000L;
+        Configuration conf = new ConfigurationBuilder().expiration().maxIdle(expiration).build();
         EmbeddedCacheManager ecm = new DefaultCacheManager(conf);
         Cache<String, String> cache = ecm.getCache();
 
