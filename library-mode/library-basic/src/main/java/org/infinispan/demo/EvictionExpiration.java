@@ -15,7 +15,7 @@ public class EvictionExpiration {
     }
 
     public static void evictionExample() {
-        Configuration conf = new ConfigurationBuilder().eviction().size(5).strategy(EvictionStrategy.LIRS).build();
+        Configuration conf = new ConfigurationBuilder().eviction().size(5).strategy(EvictionStrategy.LRU).build();
         EmbeddedCacheManager ecm = new DefaultCacheManager(conf);
         Cache<String, String> cache = ecm.getCache();
 
