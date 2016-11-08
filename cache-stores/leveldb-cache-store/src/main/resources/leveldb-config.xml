@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infinispan>
+    <cache-container>
+        <local-cache name="test">
+            <persistence passivation="false">
+                <leveldb-store path="/tmp/leveldb/">
+                    <expiration path="/tmp/leveldb/expired/" />
+                </leveldb-store>
+            </persistence>
+        </local-cache>
+    </cache-container>
+</infinispan>       
