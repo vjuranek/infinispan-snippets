@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infinispan>
+    <cache-container>
+        <local-cache name="test">
+            <persistence passivation="false">
+                <rocksdb-store path="/tmp/rockdb/">
+                    <expiration path="/tmp/rockdb/expired/" />
+                </rocksdb-store>
+            </persistence>
+        </local-cache>
+    </cache-container>
+</infinispan>       
