@@ -8,7 +8,6 @@
 using namespace infinispan::hotrod;
 using namespace std;
 
-const int MAGIC = 2051;
 
 int main(int argc, char** argv) {
         
