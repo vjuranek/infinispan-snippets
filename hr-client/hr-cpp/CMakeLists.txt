@@ -1,0 +1,10 @@
+cmake_minimum_required (VERSION 2.8.11)
+project (hrclient)
+add_library (hotrod SHARED IMPORTED)
+set_property (TARGET hotrod PROPERTY IMPORTED_LOCATION /opt/local/lib/libhotrod.so)
+include_directories (/opt/local/include)
+
+add_executable (hrclient src/hrclient.cpp)
+set_target_properties(hrclient PROPERTIES COMPILE_DEFINITIONS "HR_PROTO_EXPORT=")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+target_link_libraries (hrclient hotrod)
