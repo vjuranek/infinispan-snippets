@@ -2,7 +2,7 @@
 
 == Building
 
-Project use https://leiningen.org/(Leiningen) for build management.
+Project use https://leiningen.org/[Leiningen] for build management.
 To build jar file, run
 
 `lein uberjar`
