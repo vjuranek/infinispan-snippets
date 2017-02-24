@@ -1,0 +1,17 @@
+= Clojure HotRod client
+
+== Building
+
+Project use https://leiningen.org/(Leiningen) for build management.
+To build jar file, run
+
+`lein uberjar`
+
+To execute the client directly, run
+
+`lein run`
+
+== Usage
+
+`java -jar hr-clojure-0.1.0-standalone.jar [args]`
+
