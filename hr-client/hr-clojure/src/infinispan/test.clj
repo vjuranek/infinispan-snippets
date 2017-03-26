@@ -9,7 +9,8 @@
   "Creates simple HR client, puts key/value into remote server and reads it back"
   [& args]
   (def conf (ConfigurationBuilder.))
-  (.port (.host (.addServer conf) "127.0.0.1") ConfigurationProperties/DEFAULT_HOTROD_PORT)
+  ;;(.port (.host (.addServer conf) "127.0.0.1") ConfigurationProperties/DEFAULT_HOTROD_PORT)
+  (-> (.addServer conf) (.host "127.0.0.1") (.port ConfigurationProperties/DEFAULT_HOTROD_PORT))
   (def cm (RemoteCacheManager. (.build conf)))
   (def cache (.getCache cm))
   (println "Sending key -> value")
