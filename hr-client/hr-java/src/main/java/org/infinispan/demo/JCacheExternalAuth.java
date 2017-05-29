@@ -10,8 +10,10 @@ import javax.cache.spi.CachingProvider;
 /**
  * Simple app, which accesses cache via JCahce API and use EXTERNAL SASL auth to authneticate itself to the server.
  * All important setup is done via properties, see src/main/resources/hotrod-client.properties.
- * Appropriate ISPN server config is conf/sasl_external_auth.xml.
- * 
+ * Appropriate ISPN server config is conf/sasl_external_auth.xml and certificates in cert dir.
+ * Please note you need copy both keystore_server.jks and truststore_server.jks in server standalone/configuration
+ * dir have fully working ISPN server. 
+ *
  * @author vjuranek
  *
  */
