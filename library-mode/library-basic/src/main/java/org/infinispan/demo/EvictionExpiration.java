@@ -4,6 +4,7 @@ import org.infinispan.Cache;
 import org.infinispan.configuration.cache.Configuration;
 import org.infinispan.configuration.cache.ConfigurationBuilder;
 import org.infinispan.configuration.cache.StorageType;
+import org.infinispan.eviction.EvictionType;
 import org.infinispan.manager.DefaultCacheManager;
 import org.infinispan.manager.EmbeddedCacheManager;
 
@@ -18,7 +19,8 @@ public class EvictionExpiration {
         //ISPN8 or sooner
         //Configuration conf = new ConfigurationBuilder().eviction().size(5).strategy(EvictionStrategy.LRU).build();
         //ISPN9 or later
-        Configuration conf = new ConfigurationBuilder().memory().size(5).storageType(StorageType.OBJECT).build();
+        Configuration conf = new ConfigurationBuilder().memory().storageType(StorageType.OBJECT)
+                .evictionType(EvictionType.COUNT).size(5).build();
         EmbeddedCacheManager ecm = new DefaultCacheManager(conf);
         Cache<String, String> cache = ecm.getCache();
 
