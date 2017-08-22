@@ -13,7 +13,9 @@ import org.infinispan.manager.EmbeddedCacheManager;
 public class Offheap {
 
     public static void main(String[] args) throws Exception {
-        offheapEvictionLargeEntries();
+        //offheapEvictionExample
+        offheapEvictionWithListener();
+        //offheapEvictionLargeEntries();
     }
 
     public static void offheapEvictionExample() {
@@ -21,6 +23,21 @@ public class Offheap {
                 .evictionType(EvictionType.COUNT).size(5).build();
         EmbeddedCacheManager ecm = new DefaultCacheManager(conf);
         Cache<String, String> cache = ecm.getCache();
+
+        for (int i = 0; i < 100; i++) {
+            cache.put("key" + i, "value" + i);
+        }
+        System.out.printf("Eviction: cache size: %d\n", cache.size());
+        dumpCache(cache);
+        ecm.stop();
+    }
+    
+    public static void offheapEvictionWithListener() {
+        Configuration conf = new ConfigurationBuilder().memory().storageType(StorageType.OFF_HEAP)
+                .evictionType(EvictionType.COUNT).size(5).build();
+        EmbeddedCacheManager ecm = new DefaultCacheManager(conf);
+        Cache<String, String> cache = ecm.getCache();
+        cache.addListener(new EntryListener());
 
         for (int i = 0; i < 100; i++) {
             cache.put("key" + i, "value" + i);

@@ -11,8 +11,9 @@ import org.infinispan.manager.EmbeddedCacheManager;
 public class EvictionExpiration {
 
     public static void main(String[] args) throws Exception {
-        evictionExample();
-        expirationExample();
+        //evictionExample();
+        evictionWithListener();
+        //expirationExample();
     }
 
     public static void evictionExample() {
@@ -23,6 +24,23 @@ public class EvictionExpiration {
                 .evictionType(EvictionType.COUNT).size(5).build();
         EmbeddedCacheManager ecm = new DefaultCacheManager(conf);
         Cache<String, String> cache = ecm.getCache();
+
+        for (int i = 0; i < 100; i++) {
+            cache.put("key" + i, "value" + i);
+        }
+        System.out.printf("Eviction: cache size: %d\n", cache.size());
+        dumpCache(cache);
+        ecm.stop();
+    }
+    
+    public static void evictionWithListener() {
+        Configuration conf = new ConfigurationBuilder().memory()
+                .storageType(StorageType.OBJECT)
+                .evictionType(EvictionType.COUNT).size(5)
+                .build();
+        EmbeddedCacheManager ecm = new DefaultCacheManager(conf);
+        Cache<String, String> cache = ecm.getCache();
+        cache.addListener(new EntryListener());
 
         for (int i = 0; i < 100; i++) {
             cache.put("key" + i, "value" + i);
