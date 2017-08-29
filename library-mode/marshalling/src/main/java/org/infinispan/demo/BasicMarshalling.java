@@ -13,8 +13,8 @@ public class BasicMarshalling {
     
     public static void main(String[] args) {
         storeBinary();
-        //storeObject();
-        //storeOffHeap();
+        storeObject();
+        storeOffHeap();
     }
     
     private static void storeBinary() {
@@ -23,6 +23,7 @@ public class BasicMarshalling {
         Cache<String, SerializablePerson> cache = ecm.getCache();
 
         cache.put("person", new SerializablePerson("name", "surname"));
+        System.out.println("BINARY storage");
         System.out.printf("Cache size: %d\n", cache.size());
         System.out.printf("Person %s\n", cache.get("person"));
         ecm.stop();
@@ -34,6 +35,7 @@ public class BasicMarshalling {
         Cache<String, Person> cache = ecm.getCache();
 
         cache.put("person", new Person("name", "surname"));
+        System.out.println("OBJECT storage");
         System.out.printf("Cache size: %d\n", cache.size());
         System.out.printf("Person %s\n", cache.get("person"));
         ecm.stop();
@@ -45,6 +47,7 @@ public class BasicMarshalling {
         Cache<String, SerializablePerson> cache = ecm.getCache();
 
         cache.put("person", new SerializablePerson("name", "surname"));
+        System.out.println("OFF-HEAP storage");
         System.out.printf("Cache size: %d\n", cache.size());
         System.out.printf("Person %s\n", cache.get("person"));
         ecm.stop();
