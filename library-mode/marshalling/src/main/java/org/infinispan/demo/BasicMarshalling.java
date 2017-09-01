@@ -5,6 +5,7 @@ import org.infinispan.configuration.cache.Configuration;
 import org.infinispan.configuration.cache.ConfigurationBuilder;
 import org.infinispan.configuration.cache.StorageType;
 import org.infinispan.demo.model.Person;
+import org.infinispan.demo.model.PersonWithExternalizer;
 import org.infinispan.demo.model.SerializablePerson;
 import org.infinispan.manager.DefaultCacheManager;
 import org.infinispan.manager.EmbeddedCacheManager;
@@ -20,9 +21,9 @@ public class BasicMarshalling {
     private static void storeBinary() {
         Configuration conf = new ConfigurationBuilder().memory().storageType(StorageType.BINARY).build();
         EmbeddedCacheManager ecm = new DefaultCacheManager(conf);
-        Cache<String, SerializablePerson> cache = ecm.getCache();
+        Cache<String, PersonWithExternalizer> cache = ecm.getCache();
 
-        cache.put("person", new SerializablePerson("name", "surname"));
+        cache.put("person", new PersonWithExternalizer("name", "surname"));
         System.out.println("BINARY storage");
         System.out.printf("Cache size: %d\n", cache.size());
         System.out.printf("Person %s\n", cache.get("person"));
@@ -44,9 +45,9 @@ public class BasicMarshalling {
     private static void storeOffHeap() {
         Configuration conf = new ConfigurationBuilder().memory().storageType(StorageType.OFF_HEAP).build();
         EmbeddedCacheManager ecm = new DefaultCacheManager(conf);
-        Cache<String, SerializablePerson> cache = ecm.getCache();
+        Cache<String, PersonWithExternalizer> cache = ecm.getCache();
 
-        cache.put("person", new SerializablePerson("name", "surname"));
+        cache.put("person", new PersonWithExternalizer("name", "surname"));
         System.out.println("OFF-HEAP storage");
         System.out.printf("Cache size: %d\n", cache.size());
         System.out.printf("Person %s\n", cache.get("person"));
