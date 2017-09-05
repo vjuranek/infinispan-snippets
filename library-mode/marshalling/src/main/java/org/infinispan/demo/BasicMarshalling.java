@@ -6,7 +6,6 @@ import org.infinispan.configuration.cache.ConfigurationBuilder;
 import org.infinispan.configuration.cache.StorageType;
 import org.infinispan.demo.model.Person;
 import org.infinispan.demo.model.PersonWithExternalizer;
-import org.infinispan.demo.model.SerializablePerson;
 import org.infinispan.manager.DefaultCacheManager;
 import org.infinispan.manager.EmbeddedCacheManager;
 
