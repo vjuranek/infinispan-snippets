@@ -30,7 +30,7 @@ public class PersonExternalizer implements AdvancedExternalizer<Person> {
 
     public Integer getId() {
         // see http://infinispan.org/docs/dev/user_guide/user_guide.html#preassigned_externalizer_id_ranges
-        return 2001;
+        return 2201;
     }
     
 
