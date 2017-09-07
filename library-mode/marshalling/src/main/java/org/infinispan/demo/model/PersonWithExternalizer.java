@@ -17,8 +17,8 @@ public class PersonWithExternalizer extends Person {
     public static class PersonExternalizer implements Externalizer<PersonWithExternalizer> {
         
         public void writeObject(ObjectOutput output, PersonWithExternalizer person) throws IOException {
-            output.writeObject(person.name);
-            output.writeObject(person.surname);
+            output.writeObject(person.getName());
+            output.writeObject(person.getSurname());
         }
 
         public PersonWithExternalizer readObject(ObjectInput input) throws IOException, ClassNotFoundException {
