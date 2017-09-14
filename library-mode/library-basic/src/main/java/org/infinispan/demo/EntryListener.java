@@ -7,8 +7,10 @@ import java.util.logging.Logger;
 import org.infinispan.notifications.Listener;
 import org.infinispan.notifications.cachelistener.annotation.CacheEntriesEvicted;
 import org.infinispan.notifications.cachelistener.annotation.CacheEntryCreated;
+import org.infinispan.notifications.cachelistener.annotation.CacheEntryModified;
 import org.infinispan.notifications.cachelistener.event.CacheEntriesEvictedEvent;
 import org.infinispan.notifications.cachelistener.event.CacheEntryCreatedEvent;
+import org.infinispan.notifications.cachelistener.event.CacheEntryModifiedEvent;
 
 @Listener
 public class EntryListener {
@@ -20,6 +22,13 @@ public class EntryListener {
     public void onCreated(CacheEntryCreatedEvent<String, String> e) {
         if (!e.isPre()) {
             LOG.log(LOG_LEVEL, String.format("Created %s -> %s", e.getKey(), e.getValue()));
+        }
+    }
+    
+    @CacheEntryModified
+    public void onModification(CacheEntryModifiedEvent<String, String> e) {
+        if (!e.isPre()) {
+            LOG.log(LOG_LEVEL, String.format("Modified %s -> %s", e.getKey(), e.getValue()));
         }
     }
     

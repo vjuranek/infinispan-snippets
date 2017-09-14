@@ -13,9 +13,10 @@ import org.infinispan.manager.EmbeddedCacheManager;
 public class OffHeap {
 
     public static void main(String[] args) throws Exception {
-        offHeapEvictionExample();
-        offHeapEvictionWithListener();
-        offHeapEvictionLargeEntries();
+        //offHeapEvictionExample();
+        //offHeapEvictionWithListener();
+        //offHeapEvictionLargeEntries();
+        offHeapModificationListener();
     }
 
     public static void offHeapEvictionExample() {
@@ -44,6 +45,18 @@ public class OffHeap {
         }
         System.out.printf("Eviction: cache size: %d\n", cache.size());
         dumpCache(cache);
+        ecm.stop();
+    }
+    
+    public static void offHeapModificationListener() {
+        Configuration conf = new ConfigurationBuilder().memory().storageType(StorageType.OFF_HEAP)
+                .evictionType(EvictionType.COUNT).size(5).build();
+        EmbeddedCacheManager ecm = new DefaultCacheManager(conf);
+        Cache<String, String> cache = ecm.getCache();
+        cache.addListener(new EntryListener());
+
+        cache.put("key", "value1");
+        cache.put("key", "value2");
         ecm.stop();
     }
     
