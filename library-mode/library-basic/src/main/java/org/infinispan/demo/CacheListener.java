@@ -1,13 +1,16 @@
 package org.infinispan.demo;
 
 import org.infinispan.Cache;
+import org.infinispan.configuration.cache.Configuration;
+import org.infinispan.configuration.cache.ConfigurationBuilder;
 import org.infinispan.manager.DefaultCacheManager;
 import org.infinispan.manager.EmbeddedCacheManager;
 
 public class CacheListener {
 
     public static void main(String[] args) {
-        EmbeddedCacheManager cm = new DefaultCacheManager();
+        Configuration conf = new ConfigurationBuilder().build();
+        EmbeddedCacheManager cm = new DefaultCacheManager(conf);
         Cache<String, String> cache = cm.getCache();
         cache.addListener(new EntryListener());
 
