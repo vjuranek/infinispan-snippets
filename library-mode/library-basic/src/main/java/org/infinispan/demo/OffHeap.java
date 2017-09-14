@@ -10,15 +10,15 @@ import org.infinispan.eviction.EvictionType;
 import org.infinispan.manager.DefaultCacheManager;
 import org.infinispan.manager.EmbeddedCacheManager;
 
-public class Offheap {
+public class OffHeap {
 
     public static void main(String[] args) throws Exception {
-        //offheapEvictionExample
-        offheapEvictionWithListener();
-        //offheapEvictionLargeEntries();
+        offHeapEvictionExample();
+        offHeapEvictionWithListener();
+        offHeapEvictionLargeEntries();
     }
 
-    public static void offheapEvictionExample() {
+    public static void offHeapEvictionExample() {
         Configuration conf = new ConfigurationBuilder().memory().storageType(StorageType.OFF_HEAP)
                 .evictionType(EvictionType.COUNT).size(5).build();
         EmbeddedCacheManager ecm = new DefaultCacheManager(conf);
@@ -32,7 +32,7 @@ public class Offheap {
         ecm.stop();
     }
     
-    public static void offheapEvictionWithListener() {
+    public static void offHeapEvictionWithListener() {
         Configuration conf = new ConfigurationBuilder().memory().storageType(StorageType.OFF_HEAP)
                 .evictionType(EvictionType.COUNT).size(5).build();
         EmbeddedCacheManager ecm = new DefaultCacheManager(conf);
@@ -47,7 +47,7 @@ public class Offheap {
         ecm.stop();
     }
     
-    public static void offheapEvictionLargeEntries() {
+    public static void offHeapEvictionLargeEntries() {
         Configuration conf = new ConfigurationBuilder().memory().storageType(StorageType.OFF_HEAP)
                 .evictionType(EvictionType.COUNT).size(5).build();
         EmbeddedCacheManager ecm = new DefaultCacheManager(conf);
