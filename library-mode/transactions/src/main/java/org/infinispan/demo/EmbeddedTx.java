@@ -4,6 +4,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import javax.transaction.TransactionManager;
+
 import org.infinispan.Cache;
 import org.infinispan.configuration.cache.ConfigurationBuilder;
 import org.infinispan.demo.tx.TxWriter;
@@ -11,7 +13,7 @@ import org.infinispan.manager.DefaultCacheManager;
 import org.infinispan.manager.EmbeddedCacheManager;
 import org.infinispan.transaction.LockingMode;
 import org.infinispan.transaction.TransactionMode;
-import org.infinispan.transaction.lookup.EmbeddedTransactionManagerLookup;
+import org.infinispan.transaction.lookup.GenericTransactionManagerLookup;
 import org.infinispan.util.concurrent.IsolationLevel;
 
 public class EmbeddedTx {
@@ -24,8 +26,12 @@ public class EmbeddedTx {
         runConcurentWrites(cache, "key");
     }
     
-    public static void runConcurentWrites(Cache<String, String> cache, String key) throws InterruptedException {
+    public static void runConcurentWrites(Cache<String, String> cache, String key) throws Exception {
+        TransactionManager tm = cache.getAdvancedCache().getTransactionManager();
+        tm.begin();
         cache.put(key, "init value"); // avoid failed NPE in replace method
+        tm.commit();
+        
         ExecutorService es = Executors.newCachedThreadPool();
         for (int i = 0; i < writerCount; i++) {
             es.submit(new TxWriter(cache, key, updateCoutn));
@@ -41,12 +47,10 @@ public class EmbeddedTx {
             .isolationLevel(IsolationLevel.READ_COMMITTED)
         .transaction()
             .lockingMode(LockingMode.OPTIMISTIC)
-            .autoCommit(true)
+            .autoCommit(false) //we will handle transaction boundaries manually
             .completedTxTimeout(60_000)
             .transactionMode(TransactionMode.TRANSACTIONAL)
-            .transactionManagerLookup(new EmbeddedTransactionManagerLookup())
-            .recovery()
-                .enabled(false);
+            .transactionManagerLookup(new GenericTransactionManagerLookup()); // defualt to EmbeddedTransactionManagerLookup if no other TM lookup is found
         EmbeddedCacheManager cm = new DefaultCacheManager(cb.build());
         return cm.getCache();
     }
