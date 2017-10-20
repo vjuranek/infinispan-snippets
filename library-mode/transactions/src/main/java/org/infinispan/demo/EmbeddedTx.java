@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import javax.transaction.TransactionManager;
 
 import org.infinispan.Cache;
+import org.infinispan.cdi.embedded.event.cachemanager.CacheManagerEventBridge;
 import org.infinispan.configuration.cache.ConfigurationBuilder;
 import org.infinispan.demo.tx.TxWriter;
 import org.infinispan.manager.DefaultCacheManager;
@@ -22,11 +23,28 @@ public class EmbeddedTx {
     private static final int updateCoutn = 10;
     
     public static void main(String[] args) throws Exception {
-        Cache<String, String> cache = embeddedTxCache();
-        runConcurentWrites(cache, "key");
+        System.out.println("OPTIMISTIC, READ COMMITED");
+        runConcurentOptimisticsTx();
+        System.out.println("PESSIMISTIC, REPEATABLE READ");
+        runConcurentPessimisticTx();
     }
     
-    public static void runConcurentWrites(Cache<String, String> cache, String key) throws Exception {
+    public static void runConcurentOptimisticsTx() throws Exception {
+        EmbeddedCacheManager cm = getTxCache(IsolationLevel.READ_COMMITTED, LockingMode.OPTIMISTIC);
+        Cache<String, String> cache = cm.getCache();
+        runConcurrentWrites(cache);
+        cm.stop();
+    }
+    
+    public static void runConcurentPessimisticTx() throws Exception {
+        EmbeddedCacheManager cm = getTxCache(IsolationLevel.REPEATABLE_READ, LockingMode.PESSIMISTIC);
+        Cache<String, String> cache = cm.getCache();
+        runConcurrentWrites(cache);
+        cm.stop();
+    }
+    
+    public static void runConcurrentWrites(Cache<String, String> cache) throws Exception {
+        String key = "key";
         TransactionManager tm = cache.getAdvancedCache().getTransactionManager();
         tm.begin();
         cache.put(key, "init value"); // avoid failed NPE in replace method
@@ -40,18 +58,17 @@ public class EmbeddedTx {
         es.awaitTermination(10, TimeUnit.SECONDS);
     }
     
-    public static Cache<String, String> embeddedTxCache() {
+    public static EmbeddedCacheManager getTxCache(IsolationLevel isolation, LockingMode locking) {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb
         .locking()
-            .isolationLevel(IsolationLevel.READ_COMMITTED)
+            .isolationLevel(isolation)
         .transaction()
-            .lockingMode(LockingMode.OPTIMISTIC)
+            .lockingMode(locking)
             .autoCommit(false) //we will handle transaction boundaries manually
             .completedTxTimeout(60_000)
             .transactionMode(TransactionMode.TRANSACTIONAL)
             .transactionManagerLookup(new GenericTransactionManagerLookup()); // defualt to EmbeddedTransactionManagerLookup if no other TM lookup is found
-        EmbeddedCacheManager cm = new DefaultCacheManager(cb.build());
-        return cm.getCache();
+        return new DefaultCacheManager(cb.build());
     }
 }
