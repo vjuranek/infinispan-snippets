@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 import javax.transaction.TransactionManager;
 
 import org.infinispan.Cache;
-import org.infinispan.cdi.embedded.event.cachemanager.CacheManagerEventBridge;
 import org.infinispan.configuration.cache.ConfigurationBuilder;
 import org.infinispan.demo.tx.TxWriter;
 import org.infinispan.manager.DefaultCacheManager;
