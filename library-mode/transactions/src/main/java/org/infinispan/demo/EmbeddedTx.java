@@ -67,7 +67,7 @@ public class EmbeddedTx {
             .autoCommit(false) //we will handle transaction boundaries manually
             .completedTxTimeout(60_000)
             .transactionMode(TransactionMode.TRANSACTIONAL)
-            .transactionManagerLookup(new GenericTransactionManagerLookup()); // defualt to EmbeddedTransactionManagerLookup if no other TM lookup is found
+            .transactionManagerLookup(new GenericTransactionManagerLookup()); // defaults to EmbeddedTransactionManagerLookup if no other TM lookup is found
         return new DefaultCacheManager(cb.build());
     }
 }
