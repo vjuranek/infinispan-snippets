@@ -2,6 +2,7 @@ package org.infinispan.demo;
 
 import org.infinispan.Cache;
 import org.infinispan.configuration.cache.ConfigurationBuilder;
+import org.infinispan.configuration.cache.StorageType;
 import org.infinispan.manager.DefaultCacheManager;
 import org.infinispan.manager.EmbeddedCacheManager;
 import org.infinispan.stats.Stats;
@@ -15,6 +16,7 @@ public class Statistics {
     public static void printStatsDefault() {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.jmxStatistics().enable();
+        cb.memory().storageType(StorageType.OFF_HEAP);
         EmbeddedCacheManager cm =  new DefaultCacheManager(cb.build());
         Cache<String, String> cache = cm.getCache();
         
@@ -36,7 +38,7 @@ public class Statistics {
         cache.remove("key2");
         cache.remove("key5");
         
-        cache.get("key1");
+        cache.get("key5");
         cache.get("key2");
         
     }
@@ -50,7 +52,7 @@ public class Statistics {
         System.out.println("Evictions: " + stats.getEvictions());
         System.out.println("Hits: " + stats.getHits());
         System.out.println("Misses: " + stats.getMisses());
-        System.out.println("Misses: " + stats.getRemoveMisses());
+        System.out.println("Remove misses: " + stats.getRemoveMisses());
         System.out.println("Off-heap memory used: " + stats.getOffHeapMemoryUsed());
     }
 
