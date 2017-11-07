@@ -1,0 +1,22 @@
+Start ISPN server with compatibility mode enabled on default cache, complete configuration file is in `config` dir.
+
+Compile C++ client and run it:
+
+[source, shell]
+----
+cd hr-cpp
+mkdir build && cd build
+cmake ..
+cmake --build .
+./hrclient
+----
+
+Compile Java client and run it:
+[source, shell]
+----
+cd hr-java
+mvn clean package
+java -jar target/hr-client-java-compatibility-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+----
+
+Run C++ and/or Java client second time. Both client now should see their own key/value as well as key/value written by the other client.
