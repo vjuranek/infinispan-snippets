@@ -1,5 +1,7 @@
 package org.infinispan.demo;
 
+import java.util.concurrent.TimeUnit;
+
 import org.infinispan.configuration.global.GlobalConfigurationBuilder;
 import org.infinispan.counter.EmbeddedCounterManagerFactory;
 import org.infinispan.counter.api.CounterManager;
@@ -12,23 +14,30 @@ import org.infinispan.manager.EmbeddedCacheManager;
 
 public class StrongCounters {
 
-    
     public static void main(String[] args) throws Exception {
-        StrongCounter cnt = createCounter();
+        EmbeddedCacheManager cm = configureCluster();
+        StrongCounter cnt = createCounter(cm);
+
         for (int i = 0; i < 1_000; i++) {
             System.out.println(" -> " + cnt.incrementAndGet().get());
         }
+
+        cm.stop();
     }
-    
-    public static StrongCounter createCounter() {
+
+    public static EmbeddedCacheManager configureCluster() {
         GlobalConfigurationBuilder gcb = new GlobalConfigurationBuilder();
         gcb.clusteredDefault();
-        
+        gcb.transport().initialClusterSize(2).initialClusterTimeout(10, TimeUnit.SECONDS);
+
         CounterManagerConfigurationBuilder cntBuilder = gcb.addModule(CounterManagerConfigurationBuilder.class);
         cntBuilder.numOwner(2).reliability(Reliability.CONSISTENT);
         cntBuilder.addStrongCounter().name("cnt").initialValue(0).storage(Storage.VOLATILE);
-        
-        EmbeddedCacheManager cm = new DefaultCacheManager(gcb.build());
+
+        return new DefaultCacheManager(gcb.build());
+    }
+
+    public static StrongCounter createCounter(EmbeddedCacheManager cm) {
         CounterManager cntManager = EmbeddedCounterManagerFactory.asCounterManager(cm);
         return cntManager.getStrongCounter("cnt");
     }
