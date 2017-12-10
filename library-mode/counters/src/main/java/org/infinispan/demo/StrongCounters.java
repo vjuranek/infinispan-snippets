@@ -28,7 +28,10 @@ public class StrongCounters {
     public static EmbeddedCacheManager configureCluster() {
         GlobalConfigurationBuilder gcb = new GlobalConfigurationBuilder();
         gcb.clusteredDefault();
-        gcb.transport().initialClusterSize(2).initialClusterTimeout(10, TimeUnit.SECONDS);
+        gcb.transport()
+            .addProperty("configurationFile", "default-configs/default-jgroups-tcp.xml")
+            .initialClusterSize(2)
+            .initialClusterTimeout(10, TimeUnit.SECONDS);
 
         CounterManagerConfigurationBuilder cntBuilder = gcb.addModule(CounterManagerConfigurationBuilder.class);
         cntBuilder.numOwner(2).reliability(Reliability.CONSISTENT);
