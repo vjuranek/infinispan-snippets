@@ -1,0 +1,7 @@
+Expects cluster of 2 nodes.
+
+Recommended to run on IPv4:
+[source, shell]
+----
+java -Djava.net.preferIPv4Stack=true -jar target/library-locks-1.0-SNAPSHOT.jar
+----
