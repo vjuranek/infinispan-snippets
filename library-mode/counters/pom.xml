@@ -11,8 +11,8 @@
         <version.jdk>1.8</version.jdk>
         <version.maven.compiler>3.3</version.maven.compiler>
         <version.maven.shade>2.4.3</version.maven.shade>
-        <version.infinispan>9.1.3.Final</version.infinispan>
-        <java.main.class>org.infinispan.demo.StrongCounters</java.main.class>
+        <version.infinispan>9.1.6.Final</version.infinispan>
+        <java.main.class>org.infinispan.demo.LocalCounter</java.main.class>
     </properties>
 
     <dependencies>
