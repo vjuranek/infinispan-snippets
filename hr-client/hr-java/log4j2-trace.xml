@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+   <Appenders>
+      <Console name="CONSOLE" target="SYSTEM_OUT">
+         <PatternLayout pattern="%d{HH:mm:ss,SSS} %-5p [%c] (%t) %m%n"/>
+      </Console>
+   </Appenders>
+   <Loggers>
+      <Logger name="org.infinispan" level="TRACE" additivity="false">
+         <AppenderRef ref="CONSOLE"/>
+      </Logger>
+
+      <Root level="TRACE">
+         <AppenderRef ref="CONSOLE"/>
+      </Root>
+   </Loggers>
+</Configuration>
