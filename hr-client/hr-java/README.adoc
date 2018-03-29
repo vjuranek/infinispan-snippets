@@ -1,5 +1,6 @@
-=Java HotRod client examples
+= Java HotRod client examples
 
 == Trace logging
 `java -Dlog4j.configurationFile=./log4j2-trace.xml -jar target/hr-client-java-0.0.1-SNAPSHOT-jar-with-dependencies.jar`
+
 (beware that java property has to be before `-jar`)
