@@ -1,0 +1,12 @@
+= Infinispan snippets
+
+Various (usually) working code snippets showing how to use or configure  http://infinispan.org/[Infinispan].
+
+Currently it covers thse topics:
+
+* cache stores
+* server convertors
+* HotRod clients in various languages
+* library mode examples
+* using entities serialized using https://developers.google.com/protocol-buffers/[protbuf]
+* integration with https://spark.apache.org/[Apache Spark]
