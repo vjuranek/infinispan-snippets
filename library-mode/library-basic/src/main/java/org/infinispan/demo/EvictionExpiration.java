@@ -60,6 +60,7 @@ public class EvictionExpiration {
             cache.put("key" + i, "value" + i);
         }
         System.out.printf("Expiration: cache size: %d\n", cache.size());
+        System.out.printf("Sleeping for %d seconds now\n", expiration/1000);
         Thread.sleep(expiration);
         System.out.printf("Expiration: cache size: %d\n", cache.size());
         dumpCache(cache);
