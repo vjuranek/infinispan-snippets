@@ -11,7 +11,7 @@
 		<version.infinispan>9.2.2.Final</version.infinispan>
 		<version.jcache.api>1.0.0</version.jcache.api>
 		<version.log4j2>2.6.2</version.log4j2>
-		<java.main.class>org.infinispan.demo.HotRodClientJava</java.main.class>
+		<java.main.class>org.infinispan.demo.HotRodCounters</java.main.class>
 	</properties>
 
 	<dependencies>
