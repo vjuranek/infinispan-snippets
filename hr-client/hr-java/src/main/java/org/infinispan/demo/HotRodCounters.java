@@ -32,7 +32,7 @@ public class HotRodCounters {
         
         for (long i = 0; i < 1000; i++) {
             try {
-                System.out.printf("[Loop] Counter value: %d\n", cnt.addAndGet(i).get(5, TimeUnit.SECONDS));
+                System.out.printf("[Loop] Counter value: %d\n", cnt.incrementAndGet().get(5, TimeUnit.SECONDS));
             } catch (TimeoutException | ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
