@@ -1,5 +1,6 @@
 package org.infinispan.demo;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -24,27 +25,23 @@ public class HotRodCounters {
         CounterManager rcm = RemoteCounterManagerFactory.asCounterManager(cacheManager);
         StrongCounter cnt = rcm.getStrongCounter(counterName);
         
-        try {
-            System.out.printf("[Start] Counter value: %d\n", cnt.getValue().get(5, TimeUnit.SECONDS));
-        } catch (TimeoutException | ExecutionException | InterruptedException e) {
-            e.printStackTrace();
+        futureGet(cnt.reset());
+        System.out.printf("[Start] Counter value: %d\n", futureGet(cnt.getValue()));
+        for (long i = 0; i < 100; i++) {
+            System.out.printf("[Loop] Counter value: %d\n", futureGet(cnt.incrementAndGet()));
         }
-        
-        for (long i = 0; i < 1000; i++) {
-            try {
-                System.out.printf("[Loop] Counter value: %d\n", cnt.incrementAndGet().get(5, TimeUnit.SECONDS));
-            } catch (TimeoutException | ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        
-        try {
-            System.out.printf("[Stop] Counter value: %d\n", cnt.getValue().get(5, TimeUnit.SECONDS));
-        } catch (TimeoutException | ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        System.out.printf("[Stop] Counter value: %d\n", futureGet(cnt.getValue()));
         
         cacheManager.stop();
     }
-
+    
+    public static Object futureGet(CompletableFuture<?> f) {
+        Object result = null;
+        try {
+            result = f.get(5, TimeUnit.SECONDS);
+        } catch (TimeoutException | ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
