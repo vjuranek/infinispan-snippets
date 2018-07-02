@@ -25,14 +25,32 @@ public class HotRodCounters {
         CounterManager rcm = RemoteCounterManagerFactory.asCounterManager(cacheManager);
         StrongCounter cnt = rcm.getStrongCounter(counterName);
         
+        testIncrement(cnt);
+        testAdd(cnt);
+        
+        cacheManager.stop();
+    }
+    
+    public static void testIncrement(StrongCounter cnt) {
+        System.out.println("Testing increment");
+        System.out.println("=================");
         futureGet(cnt.reset());
         System.out.printf("[Start] Counter value: %d\n", futureGet(cnt.getValue()));
         for (long i = 0; i < 100; i++) {
             System.out.printf("[Loop] Counter value: %d\n", futureGet(cnt.incrementAndGet()));
         }
         System.out.printf("[Stop] Counter value: %d\n", futureGet(cnt.getValue()));
-        
-        cacheManager.stop();
+    }
+    
+    public static void testAdd(StrongCounter cnt) {
+        System.out.println("Testing add");
+        System.out.println("===========");
+        futureGet(cnt.reset());
+        System.out.printf("[Start] Counter value: %d\n", futureGet(cnt.getValue()));
+        for (long i = 0; i < 100; i++) {
+            System.out.printf("[Loop] Counter value: %d\n", futureGet(cnt.addAndGet(2L)));
+        }
+        System.out.printf("[Stop] Counter value: %d\n", futureGet(cnt.getValue()));
     }
     
     public static Object futureGet(CompletableFuture<?> f) {
