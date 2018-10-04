@@ -1,0 +1,9 @@
+{
+  "name": "hr-js",
+  "version": "1.0.0",
+  "description": "sample HR client in JavaScript",
+  "main": "hr-client.js",
+  "dependencies": {
+    "infinispan": "^0.5.0"
+  }
+}

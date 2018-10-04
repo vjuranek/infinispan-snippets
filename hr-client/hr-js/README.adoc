@@ -1,0 +1,10 @@
+= ISPN JavaScript client
+
+== Install
+
+* `npm install`
+
+== Run
+
+* run ISPN server on localhost
+* `node hr-client.js`
