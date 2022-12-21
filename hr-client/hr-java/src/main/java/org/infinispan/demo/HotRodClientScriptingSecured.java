@@ -43,7 +43,7 @@ public class HotRodClientScriptingSecured {
 
         RemoteCacheManager cacheManager = new RemoteCacheManager(builder.build());
         RemoteCache<Object, Object> cache = cacheManager.getCache(userArgs.containsKey(CACHE_NAME_KEY)
-                ? userArgs.get(CACHE_NAME_KEY) : RemoteCacheManager.DEFAULT_CACHE_NAME);
+                ? userArgs.get(CACHE_NAME_KEY) : "respCache");
 
         onCache(cache, putTestKV.andThen(dumpCache));
         

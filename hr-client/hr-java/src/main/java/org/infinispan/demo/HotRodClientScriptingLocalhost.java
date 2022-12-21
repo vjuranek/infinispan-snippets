@@ -22,7 +22,7 @@ public class HotRodClientScriptingLocalhost {
         builder.addServer().host(ISPN_IP).port(ConfigurationProperties.DEFAULT_HOTROD_PORT);
 
         RemoteCacheManager cacheManager = new RemoteCacheManager(builder.build());
-        RemoteCache<Object, Object> cache = cacheManager.getCache(RemoteCacheManager.DEFAULT_CACHE_NAME);
+        RemoteCache<Object, Object> cache = cacheManager.getCache("respCache");
 
         //populate cache with some data
         onCache(cache, putTestKV.andThen(dumpCache));

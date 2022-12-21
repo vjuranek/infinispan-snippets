@@ -11,10 +11,9 @@ public class CacheOps {
     public static final String TEST_VAL = "test_value";
     
     public static Function<RemoteCache<Object, Object>, RemoteCache<Object, Object>> dumpCache = cache -> {
-        Map<?, ?> entries = cache.getBulk();
-        System.out.printf("Number of obtained entries: %d%n", entries.size());
-        for (Object key : entries.keySet()) {
-            System.out.printf("[%s -> %s]%n", key, entries.get(key));
+        System.out.printf("Number of obtained entries: %d%n", cache.size());
+        for (Object entry : cache.entrySet()) {
+            System.out.printf("[%s]%n", entry);
         }
         return cache;
     };

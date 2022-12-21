@@ -34,7 +34,7 @@ public class HotRodClientSSLEncrypt {
         builder.security().ssl().sslContext(cont).enable();
 
         RemoteCacheManager cacheManager = new RemoteCacheManager(builder.build());
-        RemoteCache<Object, Object> cache = cacheManager.getCache(RemoteCacheManager.DEFAULT_CACHE_NAME);
+        RemoteCache<Object, Object> cache = cacheManager.getCache("respCache");
 
         onCache(cache, putTestKV.andThen(dumpCache));
 
