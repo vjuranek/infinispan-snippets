@@ -30,8 +30,9 @@ public class HotRodClientSSLEncrypt {
         ConfigurationBuilder builder = new ConfigurationBuilder();
         builder.addServer().host(ISPN_IP).port(ConfigurationProperties.DEFAULT_HOTROD_PORT);
 
-        SSLContext cont = SslContextFactory.getContext(null, null, TRUSTSTORE_PATH, TRUSTSTORE_PASSWORD.toCharArray());
-        builder.security().ssl().sslContext(cont).enable();
+        // SSLContext cont = SslContextFactory.getContext(null, null, TRUSTSTORE_PATH, TRUSTSTORE_PASSWORD.toCharArray());
+        // builder.security().ssl().sslContext(cont).enable();
+        builder.security().ssl().trustStoreFileName(TRUSTSTORE_PATH).trustStorePassword(TRUSTSTORE_PASSWORD.toCharArray());
 
         RemoteCacheManager cacheManager = new RemoteCacheManager(builder.build());
         RemoteCache<Object, Object> cache = cacheManager.getCache("respCache");

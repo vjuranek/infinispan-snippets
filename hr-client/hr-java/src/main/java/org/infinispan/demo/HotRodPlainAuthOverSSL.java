@@ -47,8 +47,9 @@ public class HotRodPlainAuthOverSSL {
                 new SimpleLoginHandler(userArgs.get(LOGIN_KEY), userArgs.get(PASS_KEY), SECURITY_REALM));
         
         //set up SSL
-        SSLContext cont = SslContextFactory.getContext(null, null, TRUSTSTORE_PATH, TRUSTSTORE_PASSWORD.toCharArray());
-        builder.security().ssl().sslContext(cont).enable();
+        // SSLContext cont = SslContextFactory.getContext(null, null, TRUSTSTORE_PATH, TRUSTSTORE_PASSWORD.toCharArray());
+        // builder.security().ssl().sslContext(cont).enable();
+        builder.security().ssl().trustStoreFileName(TRUSTSTORE_PATH).trustStorePassword(TRUSTSTORE_PASSWORD.toCharArray());
         
         RemoteCacheManager cacheManager = new RemoteCacheManager(builder.build());
         RemoteCache<Object, Object> cache = cacheManager.getCache("respCache");
