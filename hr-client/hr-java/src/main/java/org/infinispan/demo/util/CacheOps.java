@@ -12,8 +12,8 @@ public class CacheOps {
     
     public static Function<RemoteCache<Object, Object>, RemoteCache<Object, Object>> dumpCache = cache -> {
         System.out.printf("Number of obtained entries: %d%n", cache.size());
-        for (Object entry : cache.entrySet()) {
-            System.out.printf("[%s]%n", entry);
+        for (Map.Entry<Object, Object> entry : cache.entrySet()) {
+            System.out.printf("%s -> %s%n", new String((byte[])entry.getKey()), new String((byte[])entry.getValue()));
         }
         return cache;
     };
@@ -24,7 +24,7 @@ public class CacheOps {
     };
     
     public static Function<RemoteCache<Object, Object>, RemoteCache<Object, Object>> putTestKV = cache -> {
-        cache.put(TEST_KEY, TEST_VAL);
+        cache.put(TEST_KEY.getBytes(), TEST_VAL.getBytes());
         return cache;
     };
     

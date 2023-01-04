@@ -17,8 +17,10 @@ public class HotRodClientJava {
     public static void main(String[] args) {
         ConfigurationBuilder builder = new ConfigurationBuilder();
         builder.addServer().host(ISPN_IP).port(ConfigurationProperties.DEFAULT_HOTROD_PORT);
+        builder.security().authentication().username("admin").password("secret");
         RemoteCacheManager cacheManager = new RemoteCacheManager(builder.build());
-        String cacheName = args.length > 0 ? args[0] : "";
+
+        String cacheName = args.length > 0 ? args[0] : "respCache";
         RemoteCache<Object, Object> cache = cacheManager.getCache(cacheName);
 
         //cacheSize.andThen(dumpCache).apply(cache);
